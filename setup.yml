@@ -1,0 +1,18 @@
+- hosts: localhost
+  tasks:
+  - name: ensure git is at the latest version
+    yum: name=git state=latest
+    become: yes
+    become_method: sudo
+  - name: clone devops repo
+    git: repo=https://github.com/DevOpsFeb/devops.git dest=/home/ec2-user/devops/ update=no
+  - name: clone petclinic repo
+    git: repo=https://github.com/spring-projects/spring-petclinic.git dest=/home/ec2-user/petclinic/ update=no
+  - name: ensure docker is at the latest version
+    yum: name=docker state=latest
+    become: yes
+    become_method: sudo
+  - name: add docker group to ec2-user
+    user: name=ec2-user append=yes groups=docker
+    become: yes
+    become_method: sudo
