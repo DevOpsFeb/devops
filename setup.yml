@@ -22,3 +22,9 @@
     become_method: sudo
   - name: download and untar apache maven
     unarchive: src=http://apache.spd.co.il/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz dest=/home/ec2-user remote_src=True copy=no creates=/home/ec2-user/apache-maven-3.3.9
+  - name: add maven env vars to bashrc
+    #lineinfile: destfile='/home/ec2-user/.bashrc' line='export M2_HOME=/home/ec2-user/apache-maven-3.3.9;export M2=$M2_HOME/bin;export PATH=$M2:$PATH;' backrefs=yes regexp='export'#
+    lineinfile: destfile='/home/ec2-user/.bashrc' line='export M2_HOME=/home/ec2-user/apache-maven-3.3.9;export M2=$M2_HOME/bin;export PATH=$M2:$PATH;'
+  #- name: source the bashrc file
+  #  shell: source='/home/ec2-user/.bashrc'
+    
